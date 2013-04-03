@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html data-ng-app="App" data-ng-controller="AppCtrl">
+  <head>
+    <title>AngularJS Animation Demo</title>
+    <link rel="stylesheet" type="text/css" href="./lib/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <style>
+      .slide-enter-setup, .slide-leave-setup {
+        position: relative;
+        top: 0;
+
+        -webkit-transition:all linear 1s;
+        -moz-transition:all linear 1s;
+        -ms-transition:all linear 1s;
+        -o-transition:all linear 1s;
+        transition:all linear 1s;
+      }
+
+      .slide-enter-setup {
+        line-height: 0;
+        left: 50%;
+        opacity: 0;
+      }
+
+      .slide-enter-start {
+        left: 0;
+        opacity: 1;
+        line-height: 100%;
+      }
+
+      .slide-leave-setup {
+        line-height: 100%;
+        left: 0;
+        opacity: 1;
+      }
+
+      .slide-leave-start {
+        left: 50%;
+        opacity: 0;
+        line-height: 0;
+      }
+
+    </style>
+    <script>
+      $(function() {
+        var interval = 2000;
+        var duration = 1000;
+        var ul = $('ul');
+        var before = ul.children().eq(0);
+
+        addLi();
+        addLi();
+        addLi();
+        addLi();
+        addLi();
+        addLi();
+
+        tick();
+
+        function tick() {
+          setTimeout(function() {
+            addLi();
+            removeLi();
+            tick();
+          }, interval);
+        }
+
+        function addLi() {
+          var newLi = $('<li>' + Math.random() + '</li>');
+          newLi.addClass('slide-enter-setup');
+          before.after(newLi);
+          setTimeout(function() {
+            newLi.addClass('slide-enter-start');
+            setTimeout(function() {
+              newLi.removeClass('slide-enter-setup');
+              newLi.removeClass('slide-enter-start');
+            }, duration);
+          }, 0);
+        };
+
+        function removeLi() {
+          var lis = ul.children();
+          var lastLi = lis.eq(lis.length - 2);
+
+          lastLi.addClass('slide-leave-setup');
+          setTimeout(function() {
+            lastLi.addClass('slide-leave-start');
+            setTimeout(function() {
+              lastLi.remove();
+            }, duration);
+          }, 0);
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <ul>
+      <li>BEFORE</li>
+      <li>AFTER</li>
+    </ul>
+  <body>
+</html>

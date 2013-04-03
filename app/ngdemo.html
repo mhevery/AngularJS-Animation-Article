@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html data-ng-app="App" data-ng-controller="AppCtrl">
+  <head>
+    <title>AngularJS Animation Demo</title>
+    <link rel="stylesheet" type="text/css" href="./lib/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="./lib/angular.min.js"></script>
+    <style>
+      .slide-enter-setup, .slide-leave-setup {
+        position: relative;
+        top: 0;
+
+        -webkit-transition:all linear 1s;
+        -moz-transition:all linear 1s;
+        -ms-transition:all linear 1s;
+        -o-transition:all linear 1s;
+        transition:all linear 1s;
+      }
+
+      .slide-enter-setup {
+        line-height: 0;
+        left: 50%;
+        opacity: 0;
+      }
+
+      .slide-enter-start {
+        left: 0;
+        opacity: 1;
+        line-height: 100%;
+      }
+
+      .slide-leave-setup {
+        line-height: 100%;
+        left: 0;
+        opacity: 1;
+      }
+
+      .slide-leave-start {
+        left: 50%;
+        opacity: 0;
+        line-height: 0;
+      }
+
+    </style>
+    <script>
+      var interval = 2000;
+
+      function ListController($scope, $timeout) {
+        var items = $scope.items = [
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            Math.random(),
+            Math.random()
+          ];
+        tick();
+
+        function tick() {
+          $timeout(function() {
+            items.unshift(Math.random());
+            items.pop();
+            tick();
+          }, interval);
+        }
+
+      }
+    </script>
+  </head>
+
+  <body ng-app data-ng-controller="ListController">
+    <ul>
+      <li>BEFORE</li>
+      <li ng-repeat="item in items" ng-animate=" 'slide' ">{{item}}</li>
+      <li>AFTER</li>
+    </ul>
+  <body>
+</html>
